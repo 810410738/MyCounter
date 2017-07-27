@@ -105,6 +105,7 @@ public class Main {
 	{
 		switch(str)
 		{
+		
 		case '0':if(tempnumstr.equals("0")||paintanswer);else tempnumstr+="0";paintanswer = false;break;
 		case '1':if(tempnumstr.equals("0")||paintanswer)tempnumstr = "1";else tempnumstr+="1";paintanswer = false;break;
 		case '2':if(tempnumstr.equals("0")||paintanswer)tempnumstr = "2";else tempnumstr+="2";paintanswer = false;break;
@@ -115,8 +116,9 @@ public class Main {
 		case '7':if(tempnumstr.equals("0")||paintanswer)tempnumstr = "7";else tempnumstr+="7";paintanswer = false;break;
 		case '8':if(tempnumstr.equals("0")||paintanswer)tempnumstr = "8";else tempnumstr+="8";paintanswer = false;break;
 		case '9':if(tempnumstr.equals("0")||paintanswer)tempnumstr = "9";else tempnumstr+="9";paintanswer = false;break;
+		
 		case '.':
-			if(!pointstate)
+			if(!pointstate)//pointstate = false
 			{
 				if(tempnumstr.equals("0")||paintanswer)
 				{
@@ -182,7 +184,7 @@ public class Main {
 				pointstate = false;
 			}
 			break;
-		case 'f':
+		case 'f'://正负转换
 			if(tempnumstr.equals("0"))break;
 			else
 			{
@@ -190,11 +192,11 @@ public class Main {
 				else tempnumstr = "-"+tempnumstr;
 			}
 			break;
-		case 'd':
+		case 'd'://    1/x
 			if(tempnumstr.equals("0"))break;
 			countnum1 = new BigDecimal("1");
 			countnum2 = new BigDecimal(tempnumstr);
-			if(countnum2.intValue()==0 || countnum1.toString().equals("0"))
+			if(countnum2.intValue()==0)
 			{
 				tempnumstr = "0";
 			}
@@ -206,7 +208,7 @@ public class Main {
 			paintanswer = true;
 			pointstate = false;
 			break;
-		case 's':
+		case 's'://平方根
 			countnum1 = new BigDecimal(tempnumstr);
 			if(countnum1.intValue() > 0)
 			{
@@ -217,7 +219,10 @@ public class Main {
 				tempnumstr = myformat.format(Double.valueOf(tempnumstr));    
 				paintanswer = true;
 				pointstate = false;
-			}			
+			}
+			else{
+				tempnumstr = "error";
+			}
 			break;
 		case 'p':
 			countnum1 = new BigDecimal(tempnumstr);
@@ -337,35 +342,39 @@ public class Main {
 	 * 
 	 */
 	private void initialize() {
-		tempnumstr = "0";
+		tempnumstr = "0";//
 		memstate = false;
-		paintanswer = false;
-		pointstate = false;
+		paintanswer = false;//输出结果
+		pointstate = false;//小数点
 		szfz = false;
 		countstate = 0;
+		//new一个界面
 		frmMycounter = new JFrame();
 		frmMycounter.setBackground(Color.LIGHT_GRAY);
 		frmMycounter.setTitle("计算器");
 		frmMycounter.setBounds(100, 100, 362,475);
 		frmMycounter.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmMycounter.setResizable(false);
+		frmMycounter.setResizable(false);//不可见
+		
 	    panel_4 = new JPanel();
 	    panel_4.setBounds(0, 0, 362, 100);
+	    
 	    panel = frmMycounter.getContentPane();
-	    panel.setLayout(null);
+	    panel.setLayout(null);//空布局
 		panel.add(panel_4);
 		
 		answerText = new JTextField();
 		answerText.setText("0");
-		answerText.setEditable(false);
+		answerText.setEditable(false);//不可编辑
 		panel_4.add(answerText);
 		answerText.setColumns(20);
-		answerText.setHorizontalAlignment(JTextField.RIGHT);
+		answerText.setHorizontalAlignment(JTextField.RIGHT);//文本对齐方式
 		answerText.setFont(new Font("宋体",Font.BOLD,30));
+		
 		panel_3 = new JPanel();
 		panel.add(panel_3);
 		panel_3.setBounds(0,100, 362, 320);
-		panel_3.setLayout(new GridLayout(6, 4, 0, 0));
+		panel_3.setLayout(new GridLayout(6, 4, 0, 0));//6行四列
 		memoryState = new JTextField();
 		memoryState.setEditable(false);
 		
@@ -513,7 +522,7 @@ public class Main {
 		panel_3.add(btnNewButton_4);
 		
 		btnNewButton_3 = new JButton("sqrt");
-		btnNewButton_3.setMargin(new Insets(0, 0, 0, 0));
+//		btnNewButton_3.setMargin(new Insets(0, 0, 0, 0));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display('s');//平方根
@@ -525,7 +534,7 @@ public class Main {
 		
 	
 		btnx = new JButton("1/x");
-		btnx.setMargin(new Insets(0, 0, 0, 0));
+//		btnx.setMargin(new Insets(0, 0, 0, 0));
 		btnx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display('d');
@@ -544,7 +553,7 @@ public class Main {
 		
 		//+-
 		btnNewButton_5 = new JButton("+/-");
-		btnNewButton_5.setMargin(new Insets(0, 0, 0, 0));
+//		btnNewButton_5.setMargin(new Insets(0, 0, 0, 0));
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				display('f');//正负号
@@ -578,15 +587,6 @@ public class Main {
 				display('=');
 			}
 		});
-		panel_3.add(equal);
-		
-		
-		
-		
-		
-	
-		
-	
-		
+		panel_3.add(equal);		
 	}
 }
