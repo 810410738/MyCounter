@@ -215,16 +215,20 @@ public class Main {
 				//MathContext mc = new MathContext(10,RoundingMode.HALF_DOWN);
 				resultnum = new BigDecimal(String.valueOf(Math.sqrt(countnum1.doubleValue())));
 				tempnumstr = resultnum.toString();
+				//保留8位小数
 				java.text.DecimalFormat myformat=new java.text.DecimalFormat("0.00000000");
-				tempnumstr = myformat.format(Double.valueOf(tempnumstr));    
+				tempnumstr = myformat.format(Double.valueOf(tempnumstr));
+				
 				paintanswer = true;
 				pointstate = false;
 			}
-			else{
+			else{//负数
 				tempnumstr = "error";
+				paintanswer = true;
+				pointstate = false;
 			}
 			break;
-		case 'p':
+		case 'p'://百分号
 			countnum1 = new BigDecimal(tempnumstr);
 			resultnum = countnum1.divide(new BigDecimal(100),8,BigDecimal.ROUND_HALF_EVEN);
 			tempnumstr = resultnum.toString();
@@ -276,67 +280,24 @@ public class Main {
 			paintanswer = true;
 			pointstate = false;
 			break;
-		case 'E':
+		case 'E'://CE 清除当前输入
 			tempnumstr = "0";
 			answerText.setText("0");
-			countstate = 0;
-			paintanswer = true;
 			pointstate = false;
 			break;
-		case 'C':
-			memstate = false;
-			memnum = null;
+		case 'C': //全部状态清零
 			countnum1 = null;
 			countnum2 = null;
 			tempnumstr = "0";
 			answerText.setText("0");
 			countstate = 0;
-			paintanswer = true;
+			paintanswer = false;
 			pointstate = false;
-			break;
-		case 'S':
-			memnum = new BigDecimal(tempnumstr);
-			memstate = true;
-			break;
-		case 'R':
-			if(memstate && memnum!=null)
-			tempnumstr = memnum.toString();
-			break;
-		case 'A':
-			BigDecimal a = new BigDecimal(tempnumstr);
-			if(memnum!=null)memnum = memnum.add(a);
-			else memnum = a;
-			memstate = true;
-			break;
-		case 'M':
-			memstate = false;
-			memnum = null;
 			break;
 		default :break;
 		}
-		if(memnum!=null && memnum.toString().equals("0")){memnum =null;memstate = false;}
-		if(memstate)memoryState.setText("M");
-		else memoryState.setText("");
-		String resultstr="";
-		if(szfz)
-		{
-			int a=tempnumstr.indexOf(".");
-			if(a==-1)a=tempnumstr.length();
-			resultstr = tempnumstr.substring(a);
-			while(a-3>=0)
-			{
-				a-=3;
-				resultstr =","+tempnumstr.substring(a,a+3)+resultstr;
-			}
-			resultstr = ","+tempnumstr.substring(0,a)+resultstr;
-			if(resultstr.substring(0,1).equals(","))resultstr=resultstr.substring(1,resultstr.length());
-			if(resultstr.substring(0,1).equals(","))resultstr=resultstr.substring(1,resultstr.length());
-		}
-		else
-		{
-			resultstr = tempnumstr;
-		}
-		answerText.setText(resultstr);
+		
+		answerText.setText(tempnumstr);
 	}
 	/**
 	 * 
