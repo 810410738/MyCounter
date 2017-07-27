@@ -132,14 +132,16 @@ public class Main {
 			}
 			paintanswer = false;
 			break;
-		case '<':
+		case '<'://退格
 			if(tempnumstr!= null && paintanswer ==false)
 			{
 				if(tempnumstr.length()>=2)
 				{
+					//clean the 'point'
 					char[] temps = tempnumstr.substring(tempnumstr.length()-1,tempnumstr.length()).toCharArray();
-					if(temps[temps.length-1] == '.')	//clean the 'point'
+					if(temps[temps.length-1] == '.')	
 						pointstate=false;
+					
 					tempnumstr= tempnumstr.substring(0, tempnumstr.length()-1);
 				}
 				else
@@ -232,6 +234,13 @@ public class Main {
 			countnum1 = new BigDecimal(tempnumstr);
 			resultnum = countnum1.divide(new BigDecimal(100),8,BigDecimal.ROUND_HALF_EVEN);
 			tempnumstr = resultnum.toString();
+			paintanswer = true;
+			break;
+		case '^'://平方
+			countnum1 = new BigDecimal(tempnumstr);
+			resultnum = countnum1.multiply(countnum1);
+			tempnumstr = resultnum.toString();
+			paintanswer = true;
 			break;
 		case '=':
 			if(countnum1==null || paintanswer == true)
@@ -241,25 +250,25 @@ public class Main {
 				pointstate = false;
 				break;
 			}
-			if(countstate == 1)		//+
+			if(countstate == 1)		//加法
 			{
 				countnum2 = new BigDecimal(tempnumstr);
 				resultnum = countnum1.add(countnum2);
 				tempnumstr = resultnum.toString();
 			}
-			else if(countstate == 2)		//-
+			else if(countstate == 2)		//减法
 			{
 				countnum2 = new BigDecimal(tempnumstr);
 				resultnum = countnum1.subtract(countnum2);
 				tempnumstr = resultnum.toString();
 			}
-			else if(countstate == 3)		//*
+			else if(countstate == 3)		//乘法
 			{
 				countnum2 = new BigDecimal(tempnumstr);
 				resultnum = countnum1.multiply(countnum2);
 				tempnumstr = resultnum.toString();
 			}
-			else if(countstate == 4)		// /
+			else if(countstate == 4)		// 除法
 			{
 				countnum2 = new BigDecimal(tempnumstr);
 				if(countnum2.toString().equals("0") || countnum1.toString().equals("0"))
@@ -366,7 +375,7 @@ public class Main {
 		square = new JButton("^2");
 		square.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				display('7');//计算平方，未做完
+				display('^');//计算平方
 			}
 		});
 		panel_3.add(square);
