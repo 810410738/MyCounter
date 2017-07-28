@@ -62,6 +62,7 @@ public class Main {
 	private JButton square;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
+	jdslkjflk
 	private JButton btnNewButton_2;
 	private JTextField memoryState;
 	private JButton num2;
